@@ -14,4 +14,8 @@ public class CardPayement extends Payement{
     private Date expirationDate;
     private String cvc;
     private String bankCompany;
+
+    public boolean isExpired() {
+        return new Date().after(expirationDate);
+    }
 }
