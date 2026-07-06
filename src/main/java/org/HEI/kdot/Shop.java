@@ -21,7 +21,11 @@ public class Shop {
     public List<Product> filterProductsBy(ProductCategory category, BigDecimal minPrice, BigDecimal maxPrice) {
         return products.stream()
                 .filter(product -> product.getCategory().equals(category))
-                .filter(product -> product.getCurrentPrice().compareTo(minPrice) >= 0 && product.getCurrentPrice().compareTo(maxPrice) <= 0)
+                .filter(product -> {
+                    BigDecimal price = product.getCurrentPrice();
+                    return price.compareTo(minPrice) >= 0 && price.compareTo(maxPrice) <= 0;
+                })
                 .toList();
     }
+
 }
