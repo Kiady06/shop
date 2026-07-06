@@ -19,15 +19,21 @@ public class Order {
 
     public OrderItem addItem(OrderItem toAdd) {
         this.orderItems.add(toAdd);
-
         return toAdd;
     }
 
     public OrderItem removeItem(OrderItem toRemove) {
         this.orderItems.remove(toRemove);
-
         return toRemove;
     }
 
+    public BigDecimal getTotalCost() {
+        return orderItems.stream()
+                .map(OrderItem::getTotalItemPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
+    public boolean isPaid() {
+        return payement.getStatus() == PayementStatus.DONE;
+    }
 }
