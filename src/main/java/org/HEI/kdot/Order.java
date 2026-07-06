@@ -29,7 +29,7 @@ public class Order {
 
     public BigDecimal getTotalCost() {
         return orderItems.stream()
-                .map(OrderItem::getTotalItemPrice)
+                .map(ip -> ip.getTotalItemPrice(this.updatedAt))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
