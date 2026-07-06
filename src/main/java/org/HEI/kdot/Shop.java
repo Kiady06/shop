@@ -5,12 +5,23 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
 @Data
 @ToString(callSuper = true)
 public class Shop {
-    public String shopName;
-    public String nif;
-    public String stat;
+    private String shopName;
+    private String nif;
+    private String stat;
+    private List<Product> products;
+
+    public List<Product> filterProductsBy(ProductCategory category, BigDecimal minPrice, BigDecimal maxPrice) {
+        return products.stream()
+                .filter(product -> product.getCategory().equals(category))
+                .filter(product -> product.getCurrentPrice().compareTo(minPrice) >= 0 && product.getCurrentPrice().compareTo(maxPrice) <= 0)
+                .toList();
+    }
 }
