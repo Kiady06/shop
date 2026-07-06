@@ -14,7 +14,7 @@ public class Order {
     private Instant createdAt;
     private Instant updatedAt;
     private Customer customer;
-    private Payement payement;
+    private List<Payement> payements;
     private List<OrderItem> orderItems;
 
     public OrderItem addItem(OrderItem toAdd) {
@@ -34,6 +34,12 @@ public class Order {
     }
 
     public boolean isPaid() {
-        return payement.getStatus() == PayementStatus.DONE;
+        return (payements.stream()
+                .allMatch(payement -> payement.getStatus() == PayementStatus.DONE)
+                && this.getTotalCost().equals(
+                        payements.stream()
+                                .map(Payement::getAmountPaid)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add)
+        ));
     }
 }
