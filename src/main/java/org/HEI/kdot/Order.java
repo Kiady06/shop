@@ -29,7 +29,5 @@ public class Order {
         return toRemove;
     }
 
-    public BigDecimal getTotalCost() {
 
-    }
 }
